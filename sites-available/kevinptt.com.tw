@@ -31,11 +31,17 @@ server {
   # Specify a charset
   charset utf-8;
 
+  location / {
+    index index.php index.html index.htm;
+    try_files $uri $uri/ =404;
+  }
+
   # Custom 404 page
   error_page 404 /40x.html;
 
   include h5bp/location/userdir.conf;
   include h5bp/location/php.conf;
+  include h5bp/location/phpMyAdmin.conf;
 
   # Include the basic h5bp config set
   include h5bp/basic.conf;
