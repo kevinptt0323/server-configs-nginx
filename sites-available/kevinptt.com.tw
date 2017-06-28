@@ -19,8 +19,8 @@ server {
   # listen 80 accept_filter=httpready; # for FreeBSD
   # listen [::]:80 deferred; # for Linux
   # listen 80 deferred; # for Linux
-  listen [::]:80;
-  listen 80;
+  listen [::]:80 default_server;
+  listen 80 default_server;
 
   # The host name to respond to
   server_name kevinptt.com.tw;
