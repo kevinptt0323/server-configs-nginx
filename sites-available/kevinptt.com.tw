@@ -1,31 +1,20 @@
-# www to non-www redirect -- duplicate content is BAD:
-# https://github.com/h5bp/html5-boilerplate/blob/5370479476dceae7cc3ea105946536d6bc0ee468/.htaccess#L362
-# Choose between www and non-www, listen on the *wrong* one and redirect to
-# the right one -- http://wiki.nginx.org/Pitfalls#Server_Name
-# server {
-#   # don't forget to tell on which port this server listens
-#   listen [::]:80;
-#   listen 80;
-# 
-#   # listen on the www host
-#   server_name www.example.com;
-# 
-#   # and redirect to the non-www host (declared below)
-#   return 301 $scheme://example.com$request_uri;
-# }
+server {
+  listen [::]:80;
+  listen 80;
+  server_name www.kevinptt.com.tw;
+  return 301 $scheme://kevinptt.com.tw$request_uri;
+}
 
 server {
-  # listen [::]:80 accept_filter=httpready; # for FreeBSD
-  # listen 80 accept_filter=httpready; # for FreeBSD
-  # listen [::]:80 deferred; # for Linux
-  # listen 80 deferred; # for Linux
   listen [::]:80 default_server;
   listen 80 default_server;
-
-  # The host name to respond to
   server_name kevinptt.com.tw;
+  return 301 https://kevinptt.com.tw$request_uri;
+}
 
-  # Path for static files
+server {
+  listen 443 default_server ssl;
+  server_name kevinptt.com.tw;
   root /var/www/kevinptt.com.tw;
 
   # Specify a charset
@@ -36,13 +25,15 @@ server {
     try_files $uri $uri/ =404;
   }
 
-  # Custom 404 page
   error_page 404 /40x.html;
+
+  include h5bp/basic.conf;
 
   include h5bp/location/phpMyAdmin.conf;
   include h5bp/location/userdir.conf;
   include h5bp/location/php.conf;
+  include h5bp/location/dehydrated.conf;
 
-  # Include the basic h5bp config set
-  include h5bp/basic.conf;
+  ssl_certificate /etc/dehydrated/certs/kevinptt.com.tw/fullchain.pem;
+  ssl_certificate_key /etc/dehydrated/certs/kevinptt.com.tw/privkey.pem;
 }
