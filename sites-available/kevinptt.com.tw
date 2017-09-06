@@ -29,3 +29,17 @@ server {
   ssl_certificate_key /etc/dehydrated/certs/kevinptt.com.tw/privkey.pem;
   return 301 $scheme://blog.kevinptt.me$request_uri;
 }
+
+server {
+  listen [::]:80;
+  listen 80;
+  server_name www.kevinptt.com.tw;
+  return 301 $scheme://www.kevinptt.me$request_uri;
+}
+
+server {
+  listen [::]:443;
+  listen 443 ssl http2;
+  server_name www.kevinptt.com.tw;
+  return 301 $scheme://www.kevinptt.me$request_uri;
+}
