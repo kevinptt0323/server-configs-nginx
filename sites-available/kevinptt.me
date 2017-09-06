@@ -1,0 +1,32 @@
+server {
+  listen [::]:80 default_server;
+  listen 80 default_server;
+  server_name kevinptt.me;
+  return 301 https://kevinptt.me$request_uri;
+}
+
+server {
+  listen 443 default_server ssl http2;
+  server_name kevinptt.me;
+  root /var/www/kevinptt.me;
+
+  # Specify a charset
+  charset utf-8;
+
+  location / {
+    index index.php index.html index.htm;
+    try_files $uri $uri/ =404;
+  }
+
+  error_page 404 /40x.html;
+
+  include h5bp/location/phpMyAdmin.conf;
+  include h5bp/location/userdir.conf;
+  include h5bp/location/php.conf;
+  include h5bp/location/dehydrated.conf;
+
+  include h5bp/basic.conf;
+
+  ssl_certificate /etc/dehydrated/certs/kevinptt.me/fullchain.pem;
+  ssl_certificate_key /etc/dehydrated/certs/kevinptt.me/privkey.pem;
+}
