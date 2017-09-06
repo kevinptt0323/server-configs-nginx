@@ -1,11 +1,4 @@
 server {
-  listen [::]:80;
-  listen 80;
-  server_name www.kevinptt.com.tw;
-  return 301 $scheme://kevinptt.com.tw$request_uri;
-}
-
-server {
   listen [::]:80 default_server;
   listen 80 default_server;
   server_name kevinptt.com.tw;
@@ -13,7 +6,7 @@ server {
 }
 
 server {
-  listen 443 default_server ssl;
+  listen 443 default_server ssl http2;
   server_name kevinptt.com.tw;
   root /var/www/kevinptt.com.tw;
 
