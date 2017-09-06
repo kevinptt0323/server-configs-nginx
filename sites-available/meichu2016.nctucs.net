@@ -1,0 +1,22 @@
+server {
+  listen [::]:80;
+  listen 80;
+  listen 443;
+
+  server_name meichu2016.nctucs.net;
+
+  root /var/www/meichu2016.nctucs.net/dist;
+
+  charset utf-8;
+
+  rewrite ^/$ /shop/ permanent;
+
+  location /shop/api/ {
+    try_files $uri $uri/ /api/index.php?$query_string;
+  }
+
+  error_page 404 /40x.html;
+
+  include h5bp/basic.conf;
+  include h5bp/location/php.conf;
+}
