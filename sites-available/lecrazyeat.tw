@@ -43,6 +43,8 @@ server {
   include h5bp/location/wordpress.conf;
   include h5bp/location/dehydrated.conf;
 
+  client_max_body_size 16m;
+
   ssl_certificate /etc/dehydrated/certs/lecrazyeat.tw/fullchain.pem;
   ssl_certificate_key /etc/dehydrated/certs/lecrazyeat.tw/privkey.pem;
 }
